@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}
+
+/* Custom Cursor */
+body {
+  cursor: default;
+}
+
+a, button, [role="button"] {
+  cursor: pointer;
+}
+
+/* Hide default cursor only on non-touch devices if we were implementing a full custom cursor,
+   but for now we'll stick to system cursor with hover effects to ensure usability */
+
+body {
+  background-color: #121212;
+  color: #F5F5DC;
+}
