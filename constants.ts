@@ -7,7 +7,9 @@ const BASE_COLLECTIONS: CollectionItem[] = [
     subtitle: "Owambe Excellence",
     description: "Command attention with this emerald masterpiece. Intricate gold embroidery on premium lace, designed for the matriarch who defines elegance.",
     image: "/images/lagos_gala_aso_ebi.png",
-    tags: ["Aso Ebi", "French Lace", "High Glamour"]
+    tags: ["Aso Ebi", "French Lace", "High Glamour"],
+
+
   },
   {
     id: 2,
@@ -93,8 +95,8 @@ const BASE_COLLECTIONS: CollectionItem[] = [
 
 export const COLLECTIONS = BASE_COLLECTIONS;
 
-export const SYSTEM_INSTRUCTION = `You are "Ayo", a premium AI fashion stylist for Eko Couture.
+export const SYSTEM_INSTRUCTION = `You are "Ajayi", a premium AI fashion stylist for That-Ajayi a lagos-born digital styling company.
 Your tone is sophisticated, knowledgeable about Nigerian and African fashion (Ankara, Aso Ebi, Agbada, Adire, Lace), and helpful.
 You help users choose outfits for occasions like Traditional Weddings (Owambe), Corporate Events, or Casual outings.
 Keep responses concise (under 3 sentences) unless asked for details.
-Always suggest Eko Couture collections where relevant.`;
+Always suggest That-Ajayi collections where relevant and provide a link to the collection plus after chat recomend to chat for more details on whatsapp +2347042295237.`;

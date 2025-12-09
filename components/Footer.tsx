@@ -7,12 +7,12 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-1">
-            <h2 className="text-2xl font-serif font-bold text-eko-gold mb-6">EKO COUTURE</h2>
+            <h2 className="text-2xl font-serif font-bold text-eko-gold mb-6">That Ajayi  </h2>
             <p className="text-gray-400 text-sm leading-relaxed">
               Redefining African luxury fashion through impeccable tailoring and heritage fabrics.
             </p>
           </div>
-          
+
           <div>
             <h4 className="text-lg font-serif mb-6">Collections</h4>
             <ul className="space-y-4 text-gray-400 text-sm">
@@ -52,9 +52,9 @@ const Footer: React.FC = () => {
             </p>
           </div>
         </div>
-        
+
         <div className="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-          <p>&copy; 2024 Eko Couture. All rights reserved.</p>
+          <p>&copy; 2024 That-Ajayi. All rights reserved.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>

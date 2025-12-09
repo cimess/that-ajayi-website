@@ -51,7 +51,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     <div ref={containerRef} className="fixed inset-0 z-50 bg-eko-black flex flex-col items-center justify-center text-white">
       <div className="overflow-hidden mb-8">
         <h1 ref={textRef} className="text-4xl md:text-6xl font-serif font-bold text-eko-gold translate-y-full opacity-0">
-          EKO COUTURE
+          THAT AJAYI
         </h1>
       </div>
 

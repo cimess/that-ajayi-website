@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://eko-couture-premium.netlify.app/sitemap.xml

@@ -1,16 +1,23 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { DataProvider } from './context/DataContext';
 import Navigation from './components/Navigation';
 import LoadingScreen from './components/LoadingScreen';
 import Hero from './components/Hero';
 import CollectionScroll from './components/CollectionScroll';
 import AIStylist from './components/AIStylist';
 import Footer from './components/Footer';
-
-const App: React.FC = () => {
+import SubmitItem from './pages/SubmitItem';
+import BookStyling from './pages/BookStyling';
+import AdminLogin from './pages/Admin/AdminLogin';
+import Dashboard from './pages/Admin/Dashboard';
+import Collections from './pages/Collections';
+import { FaWhatsapp } from 'react-icons/fa'
+const Home: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   return (
-    <div className="min-h-screen bg-eko-black text-white font-sans selection:bg-eko-gold selection:text-eko-black">
+    <>
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
       <Navigation />
       <main>
@@ -24,15 +31,19 @@ const App: React.FC = () => {
              <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-5xl font-serif font-bold mb-8 text-white">Bespoke Tailoring</h2>
                 <p className="text-xl text-gray-300 mb-12 leading-relaxed">
-                  Experience the ultimate luxury of a garment made exclusively for you.
-                  From fabric selection to the final stitch, we craft masterpieces that embody your persona.
+                 A lagos-born digital styling studio that transform everyday products into luxury visuals using ai,storytelling and modern african aesthetics
                 </p>
                 <div className="flex flex-col md:flex-row justify-center gap-6">
-                  <button className="bg-eko-green text-white px-10 py-4 uppercase tracking-widest font-bold hover:bg-eko-black transition-colors duration-300">
+                  <a href="/book" className="bg-eko-green text-white px-10 py-4 uppercase tracking-widest font-bold hover:bg-eko-black transition-colors duration-300 inline-block">
                     Book Measurement
-                  </button>
-                  <button className="border border-eko-green text-eko-green px-10 py-4 uppercase tracking-widest font-bold hover:bg-eko-green hover:text-white transition-colors duration-300">
-                    Our Process
+                  </a>
+                  <button className="border border-green rounded-full text-emerald-300 px-10 py-4 uppercase tracking-widest font-bold hover:bg-emerald-700 hover:text-white transition-colors duration-300 "  onClick={() =>
+        window.open(
+          "https://wa.me/2347042295237?text=Hi%20I%20need%20your%20service",
+          "_blank"
+        )
+      }>
+            <span className="flex items-center gap-5"><FaWhatsapp className="size-8"/>Contact us on whatsapp</span>
                   </button>
                 </div>
              </div>
@@ -44,7 +55,24 @@ const App: React.FC = () => {
       </main>
       <Footer />
       <AIStylist />
-    </div>
+    </>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <DataProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/submit" element={<SubmitItem />} />
+          <Route path="/collections" element={<Collections />} />
+          <Route path="/book" element={<BookStyling />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+        </Routes>
+      </Router>
+    </DataProvider>
   );
 };
 

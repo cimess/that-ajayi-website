@@ -8,7 +8,7 @@ const AIStylist: React.FC = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: 'Hello! I am Ayo, your personal stylist. Are you planning for a wedding, a gala, or just need a wardrobe refresh?' }
+    { role: 'model', text: 'Hello! I am Ajayi, your personal stylist. Are you planning for a wedding, a gala, or just need a wardrobe refresh?' }
   ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -44,10 +44,10 @@ const AIStylist: React.FC = () => {
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="group flex items-center gap-3 bg-eko-gold text-eko-black px-6 py-4 rounded-full shadow-2xl hover:scale-105 transition-all duration-300"
+            className="group flex items-center gap-3 bg-black/30  px-6 py-4 rounded-full shadow-2xl hover:scale-105 transition-all duration-300"
           >
             <Sparkles className="w-5 h-5" />
-            <span className="font-bold tracking-wide">Ask Stylist Ayo</span>
+            <span className="font-bold tracking-wide">Ask Stylist Ajayi</span>
           </button>
         )}
       </div>
@@ -64,7 +64,7 @@ const AIStylist: React.FC = () => {
                   <Bot className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-white font-serif font-bold">Stylist Ayo</h3>
+                  <h3 className="text-white font-serif font-bold">Stylist Ajayi</h3>
                   <p className="text-white/60 text-xs">AI Powered Fashion Expert</p>
                 </div>
               </div>
@@ -132,9 +132,6 @@ const AIStylist: React.FC = () => {
                   <Send className="w-5 h-5" />
                 </button>
               </div>
-              <p className="text-center text-white/20 text-xs mt-3">
-                Powered by Gemini. Fashion advice may vary based on availability.
-              </p>
             </div>
 
           </div>
