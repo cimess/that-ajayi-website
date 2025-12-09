@@ -76,12 +76,19 @@ const BookStyling: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Event Type</label>
-               <SelectDemo width="w-full" placeholder="Select Event Type" options={[
+               <SelectDemo
+                width="w-full"
+                placeholder="Select Event Type"
+                value={formData.eventType}
+                onValueChange={(val: string) => setFormData({...formData, eventType: val})}
+                options={[
                 { value: 'wedding', label: 'Wedding' },
                 { value: 'gala', label: 'Gala / Red Carpet' },
                 { value: 'photoshoot', label: 'Photoshoot' },
                 { value: 'wardrobe-refresh', label: 'Wardrobe Refresh' },
-              ]}/>
+              ]}
+              className=""
+              />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -100,11 +107,17 @@ const BookStyling: React.FC = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-2">Budget Range</label>
-               <SelectDemo width="w-[180px]" placeholder="Select Budget" options={[
-                { value: 'standard', label: 'Standard' },
-                { value: 'premium', label: 'Premium' },
-                { value: 'luxury', label: 'Luxury' },
-              ]}/>
+                <SelectDemo
+                  width="w-[180px]"
+                  placeholder="Select Budget"
+                  value={formData.budget}
+                  onValueChange={(val: string) => setFormData({...formData, budget: val})}
+                  className=""
+                  options={[
+                  { value: 'standard', label: 'Standard' },
+                  { value: 'premium', label: 'Premium' },
+                  { value: 'luxury', label: 'Luxury' },
+                ]}/>
                 </div>
               </div>
 

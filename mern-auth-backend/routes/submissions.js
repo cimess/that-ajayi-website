@@ -43,6 +43,20 @@ router.post('/', upload.single('media'), async (req, res) => {
         });
 
         await submission.save();
+
+        // Send Notification Email (Internal)
+        await sendEmail({
+            to: process.env.ADMIN_EMAIL || 'admin@example.com',
+            subject: `New Item Submission: ${brandName}`,
+            html: `
+                <h1>New Submission Received</h1>
+                <p><strong>Brand:</strong> ${brandName}</p>
+                <p><strong>Contact:</strong> ${contactEmail}</p>
+                <p><strong>Description:</strong> ${description}</p>
+                <p><strong>Media:</strong> <a href="${mediaUrl}">View Media</a></p>
+            `,
+        });
+
         res.status(201).json(submission);
     } catch (err) {
         res.status(400).json({ message: err.message });

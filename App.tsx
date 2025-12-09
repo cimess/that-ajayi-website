@@ -9,9 +9,13 @@ import AIStylist from './components/AIStylist';
 import Footer from './components/Footer';
 import SubmitItem from './pages/SubmitItem';
 import BookStyling from './pages/BookStyling';
+import About from './pages/About';
+import Services from './pages/Services';
+import HowItWorks from './pages/HowItWorks';
 import AdminLogin from './pages/Admin/AdminLogin';
 import Dashboard from './pages/Admin/Dashboard';
 import Collections from './pages/Collections';
+import ScrollToTop from './components/ScrollToTop';
 import { FaWhatsapp } from 'react-icons/fa'
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -63,8 +67,12 @@ const App: React.FC = () => {
   return (
     <DataProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/submit" element={<SubmitItem />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="/book" element={<BookStyling />} />

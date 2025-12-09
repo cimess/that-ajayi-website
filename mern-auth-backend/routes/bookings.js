@@ -3,10 +3,27 @@ const router = express.Router();
 const Booking = require('../models/Booking');
 
 // POST /api/bookings (Public)
+const { sendEmail } = require('../utils/emailService');
+
+// POST /api/bookings (Public)
 router.post('/', async (req, res) => {
     try {
         const booking = new Booking(req.body);
         await booking.save();
+
+        // Send Notification Email (Internal)
+        await sendEmail({
+            to: process.env.ADMIN_EMAIL || 'admin@example.com', // Replace with your email env var
+            subject: `New Booking: ${booking.serviceType}`,
+            html: `
+                <h1>New Booking Received</h1>
+                <p><strong>Name:</strong> ${booking.name}</p>
+                <p><strong>Service:</strong> ${booking.serviceType}</p>
+                <p><strong>Date:</strong> ${new Date(booking.date).toLocaleDateString()}</p>
+                <p><strong>Email:</strong> ${booking.email}</p>
+            `,
+        });
+
         res.status(201).json(booking);
     } catch (err) {
         res.status(400).json({ message: err.message });

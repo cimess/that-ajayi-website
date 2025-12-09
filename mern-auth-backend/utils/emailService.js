@@ -1,60 +1,41 @@
-// // utils/emailService.js
-// const nodemailer = require("nodemailer");
-
-// async function sendEmail(to, subject, html) {
-//   const transporter = nodemailer.createTransport({
-//     host: "smtp-relay.brevo.com",   // ✅ Brevo SMTP
-//     port: 587,                      // ✅ TLS port
-//     secure: false,                  // MUST be false for port 587
-//     auth: {
-//       user: process.env.SMTP_USER,  // Brevo SMTP login (e.g. 97f232002@smtp-brevo.com)
-//       pass: process.env.SMTP_PASS,  // Brevo Master Password
-//     },
-//   });
-
-//   const info = await transporter.sendMail({
-//     from: `"CM Housing" <${process.env.FROM_EMAIL}>`, // must be a verified sender in Brevo
-//     to,
-//     subject,
-//     html,
-//   });
-
-//   console.log("✅ Email sent:", info.messageId);
-//   return info;
-// }
-
-// module.exports = { sendEmail };
-
-// utils/emailService.js
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 require('dotenv').config();
-// Create transporter once, reuse it
+
+// Create transporter
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || "smtp-relay.brevo.com",
-  port: parseInt(process.env.SMTP_PORT) || 587,
-  secure: false, // false for port 587, true for 465
+  service: 'gmail', // or configured SMTP
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
-async function sendEmail(to, subject, html) {
+/**
+ * Send an email notification
+ * @param {string} to - Recipient email
+ * @param {string} subject - Email subject
+ * @param {string} html - HTML content
+ */
+const sendEmail = async ({ to, subject, html }) => {
+  // FEATURE FLAG: Check if emails are enabled
+  if (process.env.ENABLE_EMAIL_NOTIFICATIONS !== 'true') {
+    console.log(`[EMAIL DISABLED] Would have sent email to ${to} with subject: "${subject}"`);
+    return false;
+  }
+
   try {
     const info = await transporter.sendMail({
-      from: `"CM Housing" <${process.env.FROM_EMAIL}>`, // verified sender
+      from: `"Eko-Couture" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,
     });
-
-    console.log("✅ Email sent:", info.messageId);
-    return info;
-  } catch (err) {
-    console.error("❌ Email sending failed:", err.message);
-    throw err; // bubble up the error so caller knows
+    console.log('Message sent: %s', info.messageId);
+    return true;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return false;
   }
-}
+};
 
 module.exports = { sendEmail };
-

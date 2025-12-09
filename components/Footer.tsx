@@ -14,22 +14,21 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-serif mb-6">Collections</h4>
+            <h4 className="text-lg font-serif mb-6">Explore</h4>
             <ul className="space-y-4 text-gray-400 text-sm">
-              <li><a href="#" className="hover:text-eko-gold transition-colors">Owambe Ready</a></li>
-              <li><a href="#" className="hover:text-eko-gold transition-colors">Corporate Series</a></li>
-              <li><a href="#" className="hover:text-eko-gold transition-colors">Adire Heritage</a></li>
-              <li><a href="#" className="hover:text-eko-gold transition-colors">Bridal</a></li>
+              <li><a href="/collections" className="hover:text-eko-gold transition-colors">Latest Collections</a></li>
+              <li><a href="/about" className="hover:text-eko-gold transition-colors">Our Story</a></li>
+              <li><a href="/how-it-works" className="hover:text-eko-gold transition-colors">How It Works</a></li>
+              <li><a href="/services" className="hover:text-eko-gold transition-colors">Services</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-lg font-serif mb-6">Client Services</h4>
             <ul className="space-y-4 text-gray-400 text-sm">
-              <li><a href="#" className="hover:text-eko-gold transition-colors">Book a Consultation</a></li>
-              <li><a href="#" className="hover:text-eko-gold transition-colors">Size Guide</a></li>
-              <li><a href="#" className="hover:text-eko-gold transition-colors">Shipping & Returns</a></li>
-              <li><a href="#" className="hover:text-eko-gold transition-colors">Fabric Care</a></li>
+              <li><a href="/book" className="hover:text-eko-gold transition-colors">Book a Consultation</a></li>
+              <li><a href="/submit" className="hover:text-eko-gold transition-colors">Submit Item</a></li>
+              <li><a href="/admin" className="hover:text-eko-gold transition-colors">Agency Access</a></li>
             </ul>
           </div>
 

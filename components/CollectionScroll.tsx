@@ -156,7 +156,7 @@ const horizontalTween = useRef<any>(null);
                     <p className="text-gray-400 text-xl mb-12 max-w-md mx-auto">
                         Explore our full collection of bespoke digital fashion experiences.
                     </p>
-                    <a href="/collections" className="inline-block border border-eko-gold text-eko-gold px-12 py-4 uppercase tracking-widest hover:bg-eko-gold hover:text-black transition-all duration-300">
+                    <a href="/collections" className="inline-block border border-eko-gold text-eko-gold px-12 py-4 uppercase tracking-widest hover:bg-amber-500 hover:text-black transition-all duration-300 rounded-lg">
                         View All Collections
                     </a>
                 </div>

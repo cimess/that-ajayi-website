@@ -9,9 +9,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export function SelectDemo({width="w-[180px]",placeholder="Select Budget",options,className}) {
+export function SelectDemo({width="w-[180px]",placeholder="Select Budget",options,className, value, onValueChange}) {
   return (
-    <Select>
+    <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger className={width}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
