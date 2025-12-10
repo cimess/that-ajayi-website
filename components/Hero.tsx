@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import{Link} from 'react-router-dom';
 
 const Hero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -30,7 +31,7 @@ const Hero: React.FC = () => {
           alt="Premium Nigerian Aso Ebi Lace Fabric with Gold Embroidery"
           className="w-full h-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-eko-black via-eko-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-linear-gradient-to-t from-eko-black via-eko-black/50 to-transparent" />
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
@@ -48,9 +49,9 @@ const Hero: React.FC = () => {
         </div>
 
         <div className="hero-sub mt-12 flex flex-col md:flex-row gap-6 justify-center">
-          <button className="border border-eko-gold text-eko-gold hover:bg-eko-gold hover:text-eko-black px-8 py-3 uppercase tracking-widest text-sm transition-all duration-300">
-            View Lookbook
-          </button>
+          <Link to="/book" className="border bg-amber-500 md:bg-black md:text-white md:w-[400px] border-amber-500  md:hover:bg-amber-500 md:hover:text-black px-8 py-3 uppercase tracking-widest text-sm transition-all duration-300 text-black rounded-full font-bold">
+            Book Styling
+          </Link>
         </div>
       </div>
 

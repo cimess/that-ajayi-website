@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-eko-black text-white pt-20 pb-10 border-t border-white/5">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-1">
             <h2 className="text-2xl font-serif font-bold text-eko-gold mb-6">That Ajayi  </h2>
             <p className="text-gray-400 text-sm leading-relaxed">
@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
 
           <div>
             <h4 className="text-lg font-serif mb-6">Explore</h4>
-            <ul className="space-y-4 text-gray-400 text-sm">
+            <ul className="space-y-4 text-gray-400 text-sm ">
               <li><a href="/collections" className="hover:text-eko-gold transition-colors">Latest Collections</a></li>
               <li><a href="/about" className="hover:text-eko-gold transition-colors">Our Story</a></li>
               <li><a href="/how-it-works" className="hover:text-eko-gold transition-colors">How It Works</a></li>

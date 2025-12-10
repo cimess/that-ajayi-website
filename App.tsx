@@ -34,14 +34,14 @@ const Home: React.FC = () => {
           <div className="container mx-auto px-6 relative z-10">
              <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-5xl font-serif font-bold mb-8 text-white">Bespoke Tailoring</h2>
-                <p className="text-xl text-gray-300 mb-12 leading-relaxed">
+                <p className="text-xl  mb-12 leading-relaxed">
                  A lagos-born digital styling studio that transform everyday products into luxury visuals using ai,storytelling and modern african aesthetics
                 </p>
                 <div className="flex flex-col md:flex-row justify-center gap-6">
                   <a href="/book" className="bg-eko-green text-white px-10 py-4 uppercase tracking-widest font-bold hover:bg-eko-black transition-colors duration-300 inline-block">
                     Book Measurement
                   </a>
-                  <button className="border border-green rounded-full text-emerald-300 px-10 py-4 uppercase tracking-widest font-bold hover:bg-emerald-700 hover:text-white transition-colors duration-300 "  onClick={() =>
+                  <button className="border border-green rounded-full bg-emerald-700 md:bg-transparent md:text-white text-white px-10 py-4 uppercase tracking-widest font-bold hover:bg-emerald-700 hover:text-white transition-colors duration-300 "  onClick={() =>
         window.open(
           "https://wa.me/2347042295237?text=Hi%20I%20need%20your%20service",
           "_blank"
