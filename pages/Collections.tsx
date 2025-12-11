@@ -95,7 +95,7 @@ const Collections: React.FC = () => {
                                 href={item.affiliateLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-white uppercase tracking-widest text-xs hover:text-eko-gold transition-colors"
+                                className="p-2 rounded-full inline-flex items-center gap-2 text-black uppercase tracking-widest text-xs bg-amber-500 text-semibold"
                                 >
                                 Shop This Look
                                 <ExternalLink className="w-4 h-4" />

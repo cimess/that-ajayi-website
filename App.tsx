@@ -16,6 +16,7 @@ import AdminLogin from './pages/Admin/AdminLogin';
 import Dashboard from './pages/Admin/Dashboard';
 import Collections from './pages/Collections';
 import ScrollToTop from './components/ScrollToTop';
+import ProtectedRoute from './components/ProtectedRoute';
 import { FaWhatsapp } from 'react-icons/fa'
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -37,17 +38,17 @@ const Home: React.FC = () => {
                 <p className="text-xl  mb-12 leading-relaxed">
                  A lagos-born digital styling studio that transform everyday products into luxury visuals using ai,storytelling and modern african aesthetics
                 </p>
-                <div className="flex flex-col md:flex-row justify-center gap-6">
+                <div className="flex flex-col md:flex-row justify-center gap-6 items-center">
                   <a href="/book" className="bg-eko-green text-white px-10 py-4 uppercase tracking-widest font-bold hover:bg-eko-black transition-colors duration-300 inline-block">
                     Book Measurement
                   </a>
-                  <button className="border border-green rounded-full bg-emerald-700 md:bg-transparent md:text-white text-white px-10 py-4 uppercase tracking-widest font-bold hover:bg-emerald-700 hover:text-white transition-colors duration-300 "  onClick={() =>
+                  <button className="max-w-[300px] border border-green rounded-full bg-emerald-700 text-white px-5 py-2  uppercase tracking-widest font-bold  w-fit md:w-full gap-3 flex justify-center"  onClick={() =>
         window.open(
           "https://wa.me/2347042295237?text=Hi%20I%20need%20your%20service",
           "_blank"
         )
       }>
-            <span className="flex items-center gap-5"><FaWhatsapp className="size-8"/>Contact us on whatsapp</span>
+            <span className="flex items-center justify-center gap-3 w-fit"><FaWhatsapp className="size-8"/>Contact us</span>
                   </button>
                 </div>
              </div>
@@ -77,7 +78,11 @@ const App: React.FC = () => {
           <Route path="/collections" element={<Collections />} />
           <Route path="/book" element={<BookStyling />} />
           <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
         </Routes>
       </Router>
     </DataProvider>
@@ -85,3 +90,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+

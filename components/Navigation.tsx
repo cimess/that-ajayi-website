@@ -65,6 +65,9 @@ const Navigation: React.FC = () => {
           <Link to="/book" className=" px-2 py-2 rounded-full hover:bg-amber-500 hover:text-black transition-colors duration-300 font-bold">
             BOOK STYLING
           </Link>
+          <Link to="/submit" className=" px-2 py-2 rounded-full hover:bg-amber-500 hover:text-black transition-colors duration-300 font-bold">
+            SUBMIT ITEM
+          </Link>
         </div>
 
         {/* Mobile Toggle */}

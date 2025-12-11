@@ -54,9 +54,11 @@ app.use('/api/collections', collectionRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/bookings', bookingRoutes);
 
-
-
-
 app.get('/', (req, res) => res.json({ ok: true }));
+
+// Error handling middleware (must be last)
+const { errorHandler, notFound } = require('./middleware/errorHandler');
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -12,24 +12,47 @@ const SubmitItem: React.FC = () => {
     description: ''
   });
   const [submitted, setSubmitted] = useState(false);
-
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
 
-    // Create FormData
-    const submissionData = new FormData();
-    submissionData.append('brandName', formData.brandName);
-    submissionData.append('contactEmail', formData.contactEmail);
-    submissionData.append('description', formData.description);
+    try {
+      // Create FormData
+      const submissionData = new FormData();
+      submissionData.append('brandName', formData.brandName);
+      submissionData.append('contactEmail', formData.contactEmail);
+      submissionData.append('description', formData.description);
 
-    if (selectedFile) {
-        submissionData.append('media', selectedFile);
+      if (selectedFile) {
+          submissionData.append('media', selectedFile);
+      }
+
+      await addSubmission(submissionData as any);
+
+      // WhatsApp Integration
+      const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '2347042295237';
+      const text = `New Submission:\nBrand: ${formData.brandName}\nEmail: ${formData.contactEmail}\n${formData.description}`;
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error('Submission failed:', err);
+
+      // Show user-friendly error message
+      if (err.response?.data?.error === 'CLOUDINARY_AUTH_ERROR') {
+        setError('File upload is currently unavailable. Please try submitting without a file, or contact support.');
+      } else {
+        setError(err.response?.data?.message || 'Failed to submit. Please try again.');
+      }
+    } finally {
+      setIsSubmitting(false);
     }
-
-    await addSubmission(submissionData as any); // Type assertion needed until types fully updated
-    setSubmitted(true);
   };
 
   return (
@@ -59,7 +82,14 @@ const SubmitItem: React.FC = () => {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <>
+              {error && (
+                <div className="bg-red-500/10 border border-red-500 p-4 rounded-lg mb-6">
+                  <p className="text-red-500 text-sm">{error}</p>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Brand Name</label>
                 <input
@@ -91,6 +121,7 @@ const SubmitItem: React.FC = () => {
                 />
               </div>
 
+              {import.meta.env.VITE_USE_DATABASE === 'true' && (
               <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center hover:border-gold/50 transition-colors cursor-pointer group relative">
                 <input
                     type="file"
@@ -104,18 +135,21 @@ const SubmitItem: React.FC = () => {
                 />
                 <Upload className="w-10 h-10 text-gray-500 mx-auto mb-3 group-hover:text-gold transition-colors" />
                 <p className="text-sm text-gray-400">
-                    {selectedFile ? selectedFile.name : "Upload Image or Video"}
+                    {selectedFile ? selectedFile.name : "Upload Image or Video (Optional)"}
                 </p>
                 <p className="text-xs text-gray-600 mt-1">JPG, PNG, MP4 up to 50MB</p>
               </div>
+              )}
 
               <button
                 type="submit"
-                className="w-full bg-gold text-white font-bold py-4 rounded-lg  hover:bg-amber-500 hover:text-black transition-colors"
+                disabled={isSubmitting}
+                className="w-full bg-amber-500 text-black font-bold py-4 rounded-lg md:bg-black md:text-white hover:bg-amber-500 md:hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Submit Request
+                {isSubmitting ? 'Submitting...' : 'Submit Request'}
               </button>
             </form>
+            </>
           )}
         </div>
       </div>

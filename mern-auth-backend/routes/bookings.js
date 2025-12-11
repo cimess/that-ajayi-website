@@ -11,18 +11,25 @@ router.post('/', async (req, res) => {
         const booking = new Booking(req.body);
         await booking.save();
 
-        // Send Notification Email (Internal)
-        await sendEmail({
-            to: process.env.ADMIN_EMAIL || 'admin@example.com', // Replace with your email env var
-            subject: `New Booking: ${booking.serviceType}`,
-            html: `
-                <h1>New Booking Received</h1>
-                <p><strong>Name:</strong> ${booking.name}</p>
-                <p><strong>Service:</strong> ${booking.serviceType}</p>
-                <p><strong>Date:</strong> ${new Date(booking.date).toLocaleDateString()}</p>
-                <p><strong>Email:</strong> ${booking.email}</p>
-            `,
-        });
+        // Send Notification Email (Internal) - Only if enabled
+        if (process.env.ENABLE_EMAIL === 'true') {
+            try {
+                await sendEmail({
+                    to: process.env.ADMIN_EMAIL || 'admin@example.com',
+                    subject: `New Booking: ${booking.eventType}`,
+                    html: `
+                        <h1>New Booking Received</h1>
+                        <p><strong>Name:</strong> ${booking.clientName}</p>
+                        <p><strong>Service:</strong> ${booking.eventType}</p>
+                        <p><strong>Date:</strong> ${new Date(booking.date).toLocaleDateString()}</p>
+                        <p><strong>Email:</strong> ${booking.email}</p>
+                    `,
+                });
+            } catch (emailError) {
+                console.error('Email notification failed:', emailError);
+                // Don't fail the request if email fails
+            }
+        }
 
         res.status(201).json(booking);
     } catch (err) {

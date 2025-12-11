@@ -1,0 +1,72 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - heading "Our Services" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Elevate your fashion brand with digital-first solutions. We combine artistry with AI to deliver results that convert.
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - img [ref=e10]
+      - heading "Digital Styling" [level=3] [ref=e13]
+      - paragraph [ref=e14]: The hero product. We take your raw fabric or simple product photos and transform them into high-end editorial campaigns using AI styling.
+      - list [ref=e15]:
+        - listitem [ref=e16]: Fabric-to-Look Transformation
+        - listitem [ref=e18]: Moodboard Curation
+        - listitem [ref=e20]: 3 Style Variations
+      - generic [ref=e22]:
+        - generic [ref=e23]: Starting at ₦50,000
+        - link "Book Now" [ref=e24] [cursor=pointer]:
+          - /url: /book
+          - text: Book Now
+          - img [ref=e25]
+    - generic [ref=e27]:
+      - img [ref=e29]
+      - heading "AI Model Creation" [level=3] [ref=e32]
+      - paragraph [ref=e33]: Stop searching for the perfect face. We generate hyper-realistic AI models tailored to your brand's diversity and aesthetic needs.
+      - list [ref=e34]:
+        - listitem [ref=e35]: Custom Ethnicity & Body Type
+        - listitem [ref=e37]: Consistent Brand Face
+        - listitem [ref=e39]: Unlimited Poses
+      - generic [ref=e41]:
+        - generic [ref=e42]: Custom Quote
+        - link "Book Now" [ref=e43] [cursor=pointer]:
+          - /url: /book
+          - text: Book Now
+          - img [ref=e44]
+    - generic [ref=e46]:
+      - img [ref=e48]
+      - heading "Cinematic Reels" [level=3] [ref=e50]
+      - paragraph [ref=e51]: Motion graphics and AI-enhanced video clips designed to stop the scroll. Perfect for TikTok and Reels engagement.
+      - list [ref=e52]:
+        - listitem [ref=e53]: 15-30s Vertical Video
+        - listitem [ref=e55]: Sound Design
+        - listitem [ref=e57]: Visual Effects
+      - generic [ref=e59]:
+        - generic [ref=e60]: Starting at ₦35,000
+        - link "Book Now" [ref=e61] [cursor=pointer]:
+          - /url: /book
+          - text: Book Now
+          - img [ref=e62]
+    - generic [ref=e64]:
+      - img [ref=e66]
+      - heading "Brand Direction" [level=3] [ref=e71]
+      - paragraph [ref=e72]: A complete visual overhaul. We define your brand's color palette, typography, and visual language to scream 'Luxury'.
+      - list [ref=e73]:
+        - listitem [ref=e74]: Brand Book
+        - listitem [ref=e76]: Social Media Templates
+        - listitem [ref=e78]: Art Direction
+      - generic [ref=e80]:
+        - generic [ref=e81]: Consultation Only
+        - link "Book Now" [ref=e82] [cursor=pointer]:
+          - /url: /book
+          - text: Book Now
+          - img [ref=e83]
+  - generic [ref=e86]:
+    - heading "Not sure what you need?" [level=2] [ref=e87]
+    - paragraph [ref=e88]: Let's have a chat about your brand's vision and find the perfect package.
+    - generic:
+      - link "Book Consultation" [ref=e89] [cursor=pointer]:
+        - /url: /book
+      - button "Chat on WhatsApp" [ref=e90] [cursor=pointer]
+```

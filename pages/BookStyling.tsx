@@ -18,6 +18,21 @@ const BookStyling: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check Mode
+    const useDatabase = import.meta.env.VITE_USE_DATABASE === 'true';
+
+    if (!useDatabase) {
+       // WhatsApp Mode
+       const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '2347042295237';
+       const text = `*New Booking Request*\n\n*Client:* ${formData.clientName}\n*Email:* ${formData.email}\n*Type:* ${formData.eventType}\n*Date:* ${formData.date}\n*Budget:* ${formData.budget}`;
+       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+       window.open(url, '_blank');
+       setSubmitted(true);
+       return;
+    }
+
+    // Database Mode
     addBooking({
       id: Date.now().toString(),
       ...formData,
@@ -123,7 +138,7 @@ const BookStyling: React.FC = () => {
 
               <button
                 type="submit"
-                className="w-full bg-eko-gold text-eko-black font-bold py-4 rounded-lg hover:bg-amber-500 hover:text-black transition-colors"
+                  className="w-full bg-amber-500 text-black font-bold py-4 rounded-lg md:bg-black  hover:bg-amber-500 md:text-white hover:text-black transition-colors"
               >
                 Request Consultation
               </button>

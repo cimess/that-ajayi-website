@@ -4,6 +4,7 @@ const Submission = require('../models/Submission');
 const term_multers = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const { sendEmail } = require('../utils/emailService');
 require('../config/cloudinary');
 
 const storage = new CloudinaryStorage({
@@ -44,22 +45,39 @@ router.post('/', upload.single('media'), async (req, res) => {
 
         await submission.save();
 
-        // Send Notification Email (Internal)
-        await sendEmail({
-            to: process.env.ADMIN_EMAIL || 'admin@example.com',
-            subject: `New Item Submission: ${brandName}`,
-            html: `
-                <h1>New Submission Received</h1>
-                <p><strong>Brand:</strong> ${brandName}</p>
-                <p><strong>Contact:</strong> ${contactEmail}</p>
-                <p><strong>Description:</strong> ${description}</p>
-                <p><strong>Media:</strong> <a href="${mediaUrl}">View Media</a></p>
-            `,
-        });
+        // Send Notification Email (Internal) - Only if enabled
+        if (process.env.ENABLE_EMAIL === 'true') {
+            try {
+                await sendEmail({
+                    to: process.env.ADMIN_EMAIL || 'admin@example.com',
+                    subject: `New Item Submission: ${brandName}`,
+                    html: `
+                        <h1>New Submission Received</h1>
+                        <p><strong>Brand:</strong> ${brandName}</p>
+                        <p><strong>Contact:</strong> ${contactEmail}</p>
+                        <p><strong>Description:</strong> ${description}</p>
+                        <p><strong>Media:</strong> <a href="${mediaUrl}">View Media</a></p>
+                    `,
+                });
+            } catch (emailError) {
+                console.error('Email notification failed:', emailError);
+                // Don't fail the request if email fails
+            }
+        }
 
         res.status(201).json(submission);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        console.error('Submission error:', err);
+
+        // Check if it's a Cloudinary error
+        if (err.http_code === 401) {
+            return res.status(500).json({
+                message: 'File upload service configuration error. Please contact support or try without uploading a file.',
+                error: 'CLOUDINARY_AUTH_ERROR'
+            });
+        }
+
+        res.status(400).json({ message: err.message || 'Failed to create submission' });
     }
 });
 

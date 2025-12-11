@@ -1,6 +1,8 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { CollectionItem, BrandSubmission, ClientBooking } from '../types';
 import { COLLECTIONS as INITIAL_COLLECTIONS } from '../constants';
+import apiClient from '../services/apiClient';
+import { API_ENDPOINTS } from '../config/api.config';
 
 interface DataContextType {
   collections: CollectionItem[];
@@ -13,14 +15,13 @@ interface DataContextType {
   fetchAdminData: () => Promise<void>;
   addCollectionItem: (formData: FormData) => Promise<void>;
   deleteCollectionItem: (id: string | number) => Promise<void>;
-  addSubmission: (submission: BrandSubmission | FormData) => void;
-  updateSubmissionStatus: (id: string, status: BrandSubmission['status']) => void;
-  addBooking: (booking: ClientBooking) => void;
-  updateBookingStatus: (id: string, status: ClientBooking['status']) => void;
+  addSubmission: (submission: BrandSubmission | FormData) => Promise<void>;
+  updateSubmissionStatus: (id: string, status: BrandSubmission['status']) => Promise<void>;
+  addBooking: (booking: ClientBooking) => Promise<void>;
+  updateBookingStatus: (id: string, status: ClientBooking['status']) => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
-const API_URL = 'http://localhost:4000/api';
 
 interface DataProviderProps {
   children: ReactNode;
@@ -36,17 +37,14 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   useEffect(() => {
     const fetchCollections = async () => {
       try {
-        const res = await fetch(`${API_URL}/collections`);
-        if (res.ok) {
-          const data = await res.json();
-          const mappedData = data.map((item: any) => ({ ...item, id: item._id }));
-          setCollections(prev => [
-            ...prev,
-            ...mappedData.filter((item: any) => !prev.some(prevItem => prevItem.id === item.id))
-          ]);
-        }
+        const data = await apiClient.get<any[]>(API_ENDPOINTS.COLLECTIONS.BASE);
+        const mappedData = data.map((item: any) => ({ ...item, id: item._id }));
+        setCollections(prev => [
+          ...prev,
+          ...mappedData.filter((item: any) => !prev.some(prevItem => prevItem.id === item.id))
+        ]);
       } catch (err) {
-        console.error("Failed to fetch collections:", err);
+        console.error("Failed to fetch collections:", apiClient.getErrorMessage(err));
       }
     };
 
@@ -56,134 +54,101 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
   const checkAuth = async () => {
     try {
-      const res = await fetch(`${API_URL}/auth/refresh-token`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include'
-      });
-      if (res.ok) {
-        setIsAuthenticated(true);
-        setIsLoadingAuth(false);
-        return true;
-      }
+      await apiClient.post(API_ENDPOINTS.AUTH.REFRESH_TOKEN);
+      setIsAuthenticated(true);
+      setIsLoadingAuth(false);
+      return true;
     } catch (err) {
       console.error("Auth check failed", err);
+      setIsAuthenticated(false);
+      setIsLoadingAuth(false);
+      return false;
     }
-    setIsAuthenticated(false);
-    setIsLoadingAuth(false);
-    return false;
   };
 
   const login = async (credentials: any) => {
     try {
-      const res = await fetch(`${API_URL}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials)
-      });
-      if (res.ok) {
-        setIsAuthenticated(true);
-        return true;
-      }
+      await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, credentials);
+      setIsAuthenticated(true);
+      setIsLoadingAuth(false); // Ensure loading state is cleared
+      return true;
     } catch (err) {
-      console.error("Login failed", err);
+      console.error("Login failed", apiClient.getErrorMessage(err));
+      return false;
     }
-    return false;
   };
 
   const logout = async () => {
     try {
-      await fetch(`${API_URL}/auth/logout`, { method: 'POST', credentials: 'include' });
+      await apiClient.post(API_ENDPOINTS.AUTH.LOGOUT);
       setIsAuthenticated(false);
       setSubmissions([]);
       setBookings([]);
     } catch (err) {
-      console.error("Logout failed", err);
+      console.error("Logout failed", apiClient.getErrorMessage(err));
     }
   };
 
-  const fetchAdminData = async () => {
+  const fetchAdminData = useCallback(async () => {
     try {
-      const [subRes, bookRes] = await Promise.all([
-        fetch(`${API_URL}/submissions`),
-        fetch(`${API_URL}/bookings`)
+      const [subs, books] = await Promise.all([
+        apiClient.get<any[]>(API_ENDPOINTS.SUBMISSIONS.BASE),
+        apiClient.get<any[]>(API_ENDPOINTS.BOOKINGS.BASE)
       ]);
 
-      if (subRes.ok) {
-        const subs = await subRes.json();
-        setSubmissions(subs.map((s: any) => ({ ...s, id: s._id })));
-      }
-      if (bookRes.ok) {
-        const books = await bookRes.json();
-        setBookings(books.map((b: any) => ({ ...b, id: b._id })));
-      }
+      setSubmissions(subs.map((s: any) => ({ ...s, id: s._id })));
+      setBookings(books.map((b: any) => ({ ...b, id: b._id })));
     } catch (err) {
-      console.error("Failed to fetch admin data", err);
+      console.error("Failed to fetch admin data", apiClient.getErrorMessage(err));
     }
-  };
+  }, []);
 
   const addCollectionItem = async (formData: FormData) => {
     try {
-      const res = await fetch(`${API_URL}/collections`, {
-        method: 'POST',
-        body: formData
-      });
-      if (res.ok) {
-        const newItem = await res.json();
-        setCollections(prev => [{ ...newItem, id: newItem._id }, ...prev]);
-      }
+      const newItem = await apiClient.upload<any>(API_ENDPOINTS.COLLECTIONS.BASE, formData);
+      setCollections(prev => [{ ...newItem, id: newItem._id }, ...prev]);
     } catch (err) {
-      console.error("Error uploading collection:", err);
+      console.error("Error uploading collection:", apiClient.getErrorMessage(err));
+      throw err;
     }
   };
 
   const deleteCollectionItem = async (id: string | number) => {
     try {
-      if (typeof id === 'string') await fetch(`${API_URL}/collections/${id}`, { method: 'DELETE' });
+      if (typeof id === 'string') {
+        await apiClient.delete(API_ENDPOINTS.COLLECTIONS.BY_ID(id));
+      }
       setCollections(prev => prev.filter(item => item.id !== id));
     } catch (err) {
-      console.error("Error deleting collection:", err);
+      console.error("Error deleting collection:", apiClient.getErrorMessage(err));
+      throw err;
     }
   };
 
   const addSubmission = async (submissionData: FormData | BrandSubmission) => {
     try {
-      // Determine if we are sending JSON or FormData
-      // Ideally we standardize on FormData for submissions with files
-
-      let options: RequestInit = {
-        method: 'POST',
-      };
-
       if (submissionData instanceof FormData) {
-          options.body = submissionData;
-          // Content-Type header is set automatically by browser for FormData
+        await apiClient.upload(API_ENDPOINTS.SUBMISSIONS.BASE, submissionData);
       } else {
-          // Fallback if called with object (legacy)
-          options.headers = { 'Content-Type': 'application/json' };
-          options.body = JSON.stringify({
-            brandName: submissionData.brandName,
-            contactEmail: submissionData.contactEmail,
-            description: submissionData.description
-          });
+        await apiClient.post(API_ENDPOINTS.SUBMISSIONS.BASE, {
+          brandName: submissionData.brandName,
+          contactEmail: submissionData.contactEmail,
+          description: submissionData.description
+        });
       }
-
-      await fetch(`${API_URL}/submissions`, options);
     } catch (err) {
-      console.error("Failed to add submission", err);
+      console.error("Failed to add submission", apiClient.getErrorMessage(err));
+      throw err;
     }
   };
 
   const updateSubmissionStatus = async (id: string, status: BrandSubmission['status']) => {
     try {
-      await fetch(`${API_URL}/submissions/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
-      });
+      await apiClient.patch(API_ENDPOINTS.SUBMISSIONS.BY_ID(id), { status });
       setSubmissions(prev => prev.map(sub => (sub.id === id ? { ...sub, status } : sub)));
     } catch (err) {
-      console.error("Failed to update submission", err);
+      console.error("Failed to update submission", apiClient.getErrorMessage(err));
+      throw err;
     }
   };
 
@@ -196,26 +161,20 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         date: booking.date,
         budget: booking.budget
       };
-      await fetch(`${API_URL}/bookings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      await apiClient.post(API_ENDPOINTS.BOOKINGS.BASE, payload);
     } catch (err) {
-      console.error("Failed to add booking", err);
+      console.error("Failed to add booking", apiClient.getErrorMessage(err));
+      throw err;
     }
   };
 
   const updateBookingStatus = async (id: string, status: ClientBooking['status']) => {
     try {
-      await fetch(`${API_URL}/bookings/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
-      });
+      await apiClient.patch(API_ENDPOINTS.BOOKINGS.BY_ID(id), { status });
       setBookings(prev => prev.map(b => (b.id === id ? { ...b, status } : b)));
     } catch (err) {
-      console.error("Failed to update booking", err);
+      console.error("Failed to update booking", apiClient.getErrorMessage(err));
+      throw err;
     }
   };
 

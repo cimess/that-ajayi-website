@@ -81,9 +81,23 @@ const Services: React.FC = () => {
         <div className="bg-eko-green/20 border border-eko-green/30 p-12 text-center rounded-sm">
             <h2 className="text-3xl font-serif font-bold mb-4">Not sure what you need?</h2>
             <p className="text-gray-300 mb-8">Let's have a chat about your brand's vision and find the perfect package.</p>
-             <Link to="/book" className="bg-eko-green text-white px-8 py-3 uppercase font-bold text-sm tracking-widest hover:bg-yellow-500 hover:text-black transition-colors duration-300 rounded-full">
-                Book a Consultation
-             </Link>
+            <div className="flex flex-col md:flex-row justify-center gap-4">
+                 <Link
+                    to="/book"
+                    className="fixed bottom-0 left-0 w-1/2 z-50 bg-amber-500 text-black py-4 uppercase font-bold text-sm tracking-widest text-center rounded md:static md:w-auto md:rounded-full md:bg-eko-green md:text-white md:px-8 md:py-3 md:inline-block md:hover:bg-amber-500 md:hover:text-black transition-colors duration-300"
+                 >
+                    Book Consultation
+                 </Link>
+                 <button
+                    onClick={() => {
+                        const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '2347042295237';
+                        window.open(`https://wa.me/${whatsappNumber}?text=Hi%20I%20have%20questions%20about%20Eko%20Couture%20services`, '_blank');
+                    }}
+                    className="fixed bottom-0 right-0 w-1/2 z-50 bg-emerald-500 text-white py-4 uppercase font-bold text-sm tracking-widest text-center rounded border-t border-white/10 md:static md:border md:border-eko-green  md:bg-transparent md:w-auto md:rounded-full md:px-8 md:py-3 md:hover:bg-emerald-500  transition-colors duration-300"
+                 >
+                    Chat on WhatsApp
+                 </button>
+            </div>
         </div>
        </section>
     </div>

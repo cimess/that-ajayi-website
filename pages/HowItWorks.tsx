@@ -92,7 +92,7 @@ const HowItWorks: React.FC = () => {
          </div>
 
          <div className="mt-16 text-center">
-            <Link to="/submit" className="bg-eko-gold text-eko-black px-10 py-4 uppercase font-bold tracking-widest hover:bg-white transition-colors duration-300 inline-block shadow-lg shadow-eko-gold/20">
+            <Link to="/submit" className="px-10 py-4 uppercase font-bold tracking-widest bg-amber-500 transition-colors duration-300 inline-block shadow-lg shadow-amber-500/20 rounded-lg">
                 Start My Project
             </Link>
          </div>

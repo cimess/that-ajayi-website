@@ -1,0 +1,100 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link "a logo picture" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "a logo picture" [ref=e7]
+      - generic [ref=e8]:
+        - generic [ref=e9]: THAT
+        - generic [ref=e10]: AJAYI
+      - button [ref=e12] [cursor=pointer]:
+        - img [ref=e13]
+  - generic [ref=e15]:
+    - heading "Book Styling Services" [level=1] [ref=e16]
+    - paragraph [ref=e17]: Personalized styling for your most important moments. Tell us about your event.
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]: Name
+          - textbox [ref=e22]
+        - generic [ref=e23]:
+          - generic [ref=e24]: Email
+          - textbox [ref=e25]
+      - generic [ref=e26]:
+        - generic [ref=e27]: Event Type
+        - combobox [ref=e28] [cursor=pointer]:
+          - generic: Select Event Type
+          - img [ref=e29]
+        - combobox [ref=e31]
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - generic [ref=e34]: Event Date
+          - generic [ref=e35]:
+            - textbox [ref=e36]
+            - img
+        - generic [ref=e37]:
+          - generic [ref=e38]: Budget Range
+          - combobox [ref=e39] [cursor=pointer]:
+            - generic: Select Budget
+            - img [ref=e40]
+          - combobox [ref=e42]
+      - button "Request Consultation" [ref=e43] [cursor=pointer]
+  - contentinfo [ref=e44]:
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - heading "That Ajayi" [level=2] [ref=e48]
+          - paragraph [ref=e49]: Redefining African luxury fashion through impeccable tailoring and heritage fabrics.
+        - generic [ref=e50]:
+          - heading "Explore" [level=4] [ref=e51]
+          - list [ref=e52]:
+            - listitem [ref=e53]:
+              - link "Latest Collections" [ref=e54] [cursor=pointer]:
+                - /url: /collections
+            - listitem [ref=e55]:
+              - link "Our Story" [ref=e56] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e57]:
+              - link "How It Works" [ref=e58] [cursor=pointer]:
+                - /url: /how-it-works
+            - listitem [ref=e59]:
+              - link "Services" [ref=e60] [cursor=pointer]:
+                - /url: /services
+        - generic [ref=e61]:
+          - heading "Client Services" [level=4] [ref=e62]
+          - list [ref=e63]:
+            - listitem [ref=e64]:
+              - link "Book a Consultation" [ref=e65] [cursor=pointer]:
+                - /url: /book
+            - listitem [ref=e66]:
+              - link "Submit Item" [ref=e67] [cursor=pointer]:
+                - /url: /submit
+            - listitem [ref=e68]:
+              - link "Agency Access" [ref=e69] [cursor=pointer]:
+                - /url: /admin
+        - generic [ref=e70]:
+          - heading "Connect" [level=4] [ref=e71]
+          - generic [ref=e72]:
+            - link [ref=e73] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e74]
+            - link [ref=e77] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e78]
+            - link [ref=e80] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e81]
+          - paragraph [ref=e83]:
+            - text: Lekki Phase 1, Lagos, Nigeria
+            - text: hello@ekocouture.ng
+      - generic [ref=e84]:
+        - paragraph [ref=e85]: © 2024 That-Ajayi. All rights reserved.
+        - generic [ref=e86]:
+          - link "Privacy Policy" [ref=e87] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e88] [cursor=pointer]:
+            - /url: "#"
+```

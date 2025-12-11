@@ -4,16 +4,9 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const Collection = require('../models/Collection');
+const authenticate = require('../middleware/authenticate');
 
-// Configure Cloudinary (it should pick up env vars if already loaded,
-// but we ensure config/cloudinary.js usage if needed, or re-config here)
-// However, server.js loads dotenv.
-// Standard practice with multer-storage-cloudinary:
-
-// Ensure cloudinary is configured.
-// If config/cloudinary.js exports the configured instance, we can use it,
-// or just rely on global config if it was done.
-// Let's require the config file we saw earlier to be safe.
+// Configure Cloudinary
 require('../config/cloudinary');
 
 const storage = new CloudinaryStorage({
@@ -28,15 +21,8 @@ const upload = multer({ storage: storage });
 
 // @route   POST /api/collections
 // @desc    Upload a new collection item
-// @access  Public (or Protected if we add middleware)
-// For now, leaving public as requested, or maybe we should add auth?
-// The plan said "protected". I should check if I have an auth middleware available.
-// 'middleware/auth' usually. Let's try to import it.
-
-// Auth middleware placeholder - skipping for demo simplicity as frontend uses mock login.
-// const authMiddleware = require('../middleware/authenticate');
-
-router.post('/', upload.single('image'), async (req, res) => {
+// @access  Protected (Admin only)
+router.post('/', authenticate, upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ msg: 'No image file uploaded' });
@@ -94,8 +80,8 @@ router.get('/', async (req, res) => {
 
 // @route   DELETE /api/collections/:id
 // @desc    Delete a collection item
-// @access  Public (should be protected)
-router.delete('/:id', async (req, res) => {
+// @access  Protected (Admin only)
+router.delete('/:id', authenticate, async (req, res) => {
   try {
     const collection = await Collection.findById(req.params.id);
     if (!collection) {
@@ -113,3 +99,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 module.exports = router;
+
