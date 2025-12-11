@@ -1,6 +1,6 @@
 // API Configuration
 export const API_CONFIG = {
-  BASE_URL: (import.meta.env.VITE_API_URL as string) || 'http://localhost:4000/api',
+  BASE_URL: (import.meta.env.VITE_API_URL as string) || 'https://that-ajayi-website.onrender.com/api',
   ENABLE_EMAIL: (import.meta.env.VITE_ENABLE_EMAIL as string) === 'true',
   TIMEOUT: 30000, // 30 seconds
   RETRY_ATTEMPTS: 3,
