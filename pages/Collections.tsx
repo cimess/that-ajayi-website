@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useData } from '../context/DataContext';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -27,7 +28,7 @@ const Collections: React.FC = () => {
                     <h2 className="text-3xl font-serif text-white mb-8 border-b border-white/10 pb-4">Motion & 360 Views</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {media.map((item, index) => (
-                             <div key={item.id} className="group relative bg-[#111] border border-white/5 overflow-hidden rounded-sm hover:border-eko-gold/30 transition-all duration-300">
+                           <Link to={`/collections/similar/${item.id}`} key={item.id} className="block group relative bg-[#111] border border-white/5 overflow-hidden rounded-sm hover:border-eko-gold/30 transition-all duration-300">
                                 <div className="aspect-square relative overflow-hidden">
                                      {item.spinPath ? (
                                          <Product360Hover
@@ -50,7 +51,7 @@ const Collections: React.FC = () => {
                                     <h2 className="text-2xl font-serif text-white mb-2 leading-none">{item.title}</h2>
                                     <p className="text-gray-400 text-sm line-clamp-2">{item.description}</p>
                                 </div>
-                             </div>
+                             </Link>
                         ))}
                     </div>
                 </div>
@@ -61,7 +62,7 @@ const Collections: React.FC = () => {
                  <h2 className="text-3xl font-serif text-white mb-8 border-b border-white/10 pb-4">Editorial Images</h2>
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {pictures.map((item, index) => (
-                    <div key={item.id} className="group relative bg-[#111] border border-white/5 overflow-hidden rounded-sm hover:border-eko-gold/30 transition-all duration-300">
+                    <Link to={`/collections/similar/${item.id}`} key={item.id} className="block group relative bg-[#111] border border-white/5 overflow-hidden rounded-sm hover:border-eko-gold/30 transition-all duration-300">
                         <div className="aspect-4/5 relative overflow-hidden">
                             <img
                                 src={item.image}
@@ -91,22 +92,25 @@ const Collections: React.FC = () => {
                             </p>
 
                             {item.affiliateLink ? (
-                                <a
-                                href={item.affiliateLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 rounded-full inline-flex items-center gap-2 text-black uppercase tracking-widest text-xs bg-amber-500 text-semibold"
-                                >
-                                Shop This Look
-                                <ExternalLink className="w-4 h-4" />
-                                </a>
+                                <object>
+                                    <a
+                                    href={item.affiliateLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-2 rounded-full inline-flex items-center gap-2 text-black uppercase tracking-widest text-xs bg-amber-500 text-semibold"
+                                    onClick={(e) => e.stopPropagation()} // Prevent navigation when clicking shop link
+                                    >
+                                    Shop This Look
+                                    <ExternalLink className="w-4 h-4" />
+                                    </a>
+                                </object>
                             ) : (
                                 <div className="inline-flex items-center gap-2 text-white/50 uppercase tracking-widest text-xs cursor-default">
                                     <ArrowRight className="w-4 h-4" />
                                 </div>
                             )}
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
             </div>

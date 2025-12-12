@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { ArrowRight, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useData } from '../context/DataContext';
 import Product360Scroll from './Product360Viewer';
 
@@ -83,72 +84,77 @@ const CollectionScroll: React.FC = () => {
                             // Changed w-screen to responsive width for "peeking" effect
                             // Mobile: w-[85vw] to show a bit of next
                             // Desktop: w-[80vw] or w-[85vw] to show next card clearly
-                            className="collection-panel w-[85vw] md:w-[80vw] h-full flex flex-col md:flex-row shrink-0 relative border-r border-white/5"
+                            className="collection-panel w-[85vw] md:w-[80vw] h-full shrink-0 relative border-r border-white/5"
                         >
-                            {/* Image Side */}
-                            <div className="w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden group">
-                                {item.spinPath && horizontalTween.current ? (
-                                    <Product360Scroll
-                                        basePath={item.spinPath}
-                                        frameCount={item.spinFrames ?? 36}
-                                        containerAnimation={horizontalTween.current}
-                                    />
-                                ) : (
-                                    <>
-                                        <img
-                                            src={item.image}
-                                            alt={item.title}
-                                            loading="lazy"
-                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                            <Link to={`/collections/similar/${item.id}`} className="flex flex-col md:flex-row w-full h-full">
+                                {/* Image Side */}
+                                <div className="w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden group">
+                                    {item.spinPath && horizontalTween.current ? (
+                                        <Product360Scroll
+                                            basePath={item.spinPath}
+                                            frameCount={item.spinFrames ?? 36}
+                                            containerAnimation={horizontalTween.current}
                                         />
-                                        <div className="absolute inset-0 bg-black/20" />
-                                    </>
-                                )}
-
-                                {/* Collection Number */}
-                                <div className="absolute top-10 left-10 text-6xl md:text-9xl font-serif text-white/10 select-none pointer-events-none">
-                                    {index < 9 ? `0${index + 1}` : index + 1}
-                                </div>
-                            </div>
-
-
-                            {/* Text Side */}
-                            <div className="w-full md:w-1/2 h-1/2 md:h-full bg-eko-black flex items-center justify-center p-8 md:p-20 relative">
-                                <div className="max-w-xl">
-                                    <div className="flex gap-2 mb-6">
-                                        {item.tags.map(tag => (
-                                            <span key={tag} className="text-eko-gold text-[10px] md:text-xs uppercase tracking-wider border border-eko-gold/30 px-2 md:px-3 py-1 rounded-full">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    <h3 className="text-eko-gold uppercase tracking-[0.2em] text-xs md:text-sm mb-2">{item.subtitle}</h3>
-                                    <h2 className="text-3xl md:text-6xl font-serif text-white mb-6 leading-none">
-                                        {item.title}
-                                    </h2>
-                                    <p className="text-gray-400 text-sm md:text-lg leading-relaxed mb-8 line-clamp-3 md:line-clamp-none">
-                                        {item.description}
-                                    </p>
-
-                                    {item.affiliateLink ? (
-                                        <a
-                                            href={item.affiliateLink}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="group/btn flex items-center gap-3 text-white uppercase tracking-widest hover:text-eko-gold transition-colors text-sm md:text-base current-link"
-                                        >
-                                            Shop This Look
-                                            <ExternalLink className="w-4 h-4 md:w-5 md:h-5 group-hover/btn:translate-x-2 transition-transform" />
-                                        </a>
                                     ) : (
-                                        <button className="group/btn flex items-center gap-3 text-white uppercase tracking-widest hover:text-eko-gold transition-colors text-sm md:text-base">
-                                            Scroll down for more
-                                            <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover/btn:translate-x-2 transition-transform" />
-                                        </button>
+                                        <>
+                                            <img
+                                                src={item.image}
+                                                alt={item.title}
+                                                loading="lazy"
+                                                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                            />
+                                            <div className="absolute inset-0 bg-black/20" />
+                                        </>
                                     )}
+
+                                    {/* Collection Number */}
+                                    <div className="absolute top-10 left-10 text-6xl md:text-9xl font-serif text-white/10 select-none pointer-events-none">
+                                        {index < 9 ? `0${index + 1}` : index + 1}
+                                    </div>
                                 </div>
-                            </div>
+
+
+                                {/* Text Side */}
+                                <div className="w-full md:w-1/2 h-1/2 md:h-full bg-eko-black flex items-center justify-center p-8 md:p-20 relative">
+                                    <div className="max-w-xl">
+                                        <div className="flex gap-2 mb-6">
+                                            {item.tags.map(tag => (
+                                                <span key={tag} className="text-eko-gold text-[10px] md:text-xs uppercase tracking-wider border border-eko-gold/30 px-2 md:px-3 py-1 rounded-full">
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+
+                                        <h3 className="text-eko-gold uppercase tracking-[0.2em] text-xs md:text-sm mb-2">{item.subtitle}</h3>
+                                        <h2 className="text-3xl md:text-6xl font-serif text-white mb-6 leading-none">
+                                            {item.title}
+                                        </h2>
+                                        <p className="text-gray-400 text-sm md:text-lg leading-relaxed mb-8 line-clamp-3 md:line-clamp-none">
+                                            {item.description}
+                                        </p>
+
+                                        {item.affiliateLink ? (
+                                            <object>
+                                                <a
+                                                    href={item.affiliateLink}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="group/btn flex items-center gap-3 text-white uppercase tracking-widest hover:text-eko-gold transition-colors text-sm md:text-base current-link"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    Shop This Look
+                                                    <ExternalLink className="w-4 h-4 md:w-5 md:h-5 group-hover/btn:translate-x-2 transition-transform" />
+                                                </a>
+                                            </object>
+                                        ) : (
+                                            <button className="group/btn flex items-center gap-3 text-white uppercase tracking-widest hover:text-eko-gold transition-colors text-sm md:text-base">
+                                                Scroll down for more
+                                                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover/btn:translate-x-2 transition-transform" />
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
                     ))}
 

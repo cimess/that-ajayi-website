@@ -98,5 +98,39 @@ router.delete('/:id', authenticate, async (req, res) => {
   }
 });
 
+// @route   GET /api/collections/similar/:id
+// @desc    Get similar collection items based on tags
+// @access  Public
+router.get('/similar/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const targetCollection = await Collection.findById(id);
+
+    if (!targetCollection) {
+      return res.status(404).json({ msg: 'Collection not found' });
+    }
+
+    const tags = targetCollection.tags || [];
+
+    // Find items with at least one matching tag, excluding the current item
+    const similarCollections = await Collection.find({
+      _id: { $ne: id },
+      tags: { $in: tags }
+    });
+
+    // Sort by number of matching tags (descending)
+    similarCollections.sort((a, b) => {
+      const aMatches = a.tags.filter(tag => tags.includes(tag)).length;
+      const bMatches = b.tags.filter(tag => tags.includes(tag)).length;
+      return bMatches - aMatches;
+    });
+
+    res.json(similarCollections);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;
 

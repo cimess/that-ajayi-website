@@ -15,6 +15,7 @@ import HowItWorks from './pages/HowItWorks';
 import AdminLogin from './pages/Admin/AdminLogin';
 import Dashboard from './pages/Admin/Dashboard';
 import Collections from './pages/Collections';
+import SimilarCollections from './pages/SimilarCollections';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 import { FaWhatsapp } from 'react-icons/fa'
@@ -76,6 +77,7 @@ const App: React.FC = () => {
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/submit" element={<SubmitItem />} />
           <Route path="/collections" element={<Collections />} />
+          <Route path="/collections/similar/:id" element={<SimilarCollections />} />
           <Route path="/book" element={<BookStyling />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={
