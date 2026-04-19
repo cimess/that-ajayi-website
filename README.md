@@ -164,7 +164,7 @@ Security note: For production, route AI calls and secret-involving operations th
 ## Credits & license
 
 - Built with: React, Vite, Tailwind, GSAP, Framer Motion, Radix, and Google GenAI.  
-- License: Add your preferred license or keep proprietary — update this section with your chosen license type and a LICENSE file.
+- it free to use but have to ask permision first so i make new friends with you 
 
 ---
 
