@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Navigation from '../components/Navigation';
 
 const About: React.FC = () => {
   return (
+    <>
+    <Navigation />
     <div className="bg-eko-black text-white min-h-screen pt-24 pb-12 font-sans">
       {/* Hero Section */}
       <section className="container mx-auto px-6 mb-20">
@@ -80,6 +83,7 @@ const About: React.FC = () => {
         </div>
        </section>
     </div>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{lazy,Suspense} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { DataProvider } from './context/DataContext';
 import Navigation from './components/Navigation';
@@ -7,20 +7,18 @@ import Hero from './components/Hero';
 import CollectionScroll from './components/CollectionScroll';
 import AIStylist from './components/AIStylist';
 import Footer from './components/Footer';
-import SubmitItem from './pages/SubmitItem';
-import BookStyling from './pages/BookStyling';
-import About from './pages/About';
-import Services from './pages/Services';
-import HowItWorks from './pages/HowItWorks';
-import AdminLogin from './pages/Admin/AdminLogin';
+
 import Dashboard from './pages/Admin/Dashboard';
 import Collections from './pages/Collections';
 import SimilarCollections from './pages/SimilarCollections';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
+import ResetPassword from './pages/Admin/ResetPassword';
 import { FaWhatsapp } from 'react-icons/fa'
+
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
+const WhatsappIcon=FaWhatsapp as any
 
   return (
     <>
@@ -49,7 +47,7 @@ const Home: React.FC = () => {
           "_blank"
         )
       }>
-            <span className="flex items-center justify-center gap-3 w-fit"><FaWhatsapp className="size-8"/>Contact us</span>
+            <span className="flex items-center justify-center gap-3 w-fit"><WhatsappIcon className="size-8"/>Contact us</span>
                   </button>
                 </div>
              </div>
@@ -66,8 +64,16 @@ const Home: React.FC = () => {
 };
 
 const App: React.FC = () => {
+    const SubmitItem = lazy(() => import('./pages/SubmitItem'));
+const BookStyling = lazy(() => import('./pages/BookStyling'));
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const HowItWorks = lazy(() => import('./pages/HowItWorks'));
+const AdminLogin = lazy(() => import('./pages/Admin/AdminLogin'));
+
   return (
     <DataProvider>
+      <Suspense fallback={<LoadingScreen />}>
       <Router>
         <ScrollToTop />
         <Routes>
@@ -80,6 +86,7 @@ const App: React.FC = () => {
           <Route path="/collections/similar/:id" element={<SimilarCollections />} />
           <Route path="/book" element={<BookStyling />} />
           <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/reset-password" element={<ResetPassword />} />
           <Route path="/admin/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
@@ -87,6 +94,7 @@ const App: React.FC = () => {
           } />
         </Routes>
       </Router>
+      </Suspense>
     </DataProvider>
   );
 };

@@ -14,10 +14,20 @@ const storage = new CloudinaryStorage({
   params: {
     folder: 'eko-couture/collections',
     allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+     transformation: [
+      { width: 1000, crop: "limit" }, // Resize if larger than 1000px
+      { quality: "auto", fetch_format: "auto" } // Automatic compression and WebP conversion
+    ],
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB limit
+  }
+});
+
 
 // @route   POST /api/collections
 // @desc    Upload a new collection item

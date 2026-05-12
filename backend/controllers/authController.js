@@ -25,7 +25,6 @@ exports.login = async (req, res) => {
     const match = await bcrypt.compare(password, user.passwordHash);
     if (!match) return res.status(400).json({ message: 'Invalid email or password' });
 
-    // Simple JWT token (optional, can skip for minimal)
     const accessToken = jwt.sign(
       { sub: user._id },
       process.env.JWT_ACCESS_SECRET || 'secretkey',
@@ -138,15 +137,15 @@ exports.getCurrentUser = async (req, res) => {
 // ---- PASSWORD RESET ----
 exports.resetPassword = async (req, res) => {
   try {
-    const { email, newPassword } = req.body;
-    if (!email || !newPassword)
+    const { email, password } = req.body;
+    if (!email || !password)
       return res.status(400).json({ message: 'Email and new password required' });
 
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'User not found' });
 
     const salt = await bcrypt.genSalt(12);
-    user.passwordHash = await bcrypt.hash(newPassword, salt);
+    user.passwordHash = await bcrypt.hash(password, salt);
     await user.save();
 
     res.json({ message: 'Password reset successful' });

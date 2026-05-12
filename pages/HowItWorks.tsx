@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Upload, Wand2, Share2, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Navigation from '../components/Navigation';
 
 const HowItWorks: React.FC = () => {
     const steps = [
@@ -26,6 +27,8 @@ const HowItWorks: React.FC = () => {
     ];
 
   return (
+    <>
+    <Navigation />
     <div className="bg-eko-black text-white min-h-screen pt-24 pb-12 font-sans">
       <section className="container mx-auto px-6 text-center mb-20">
         <h1 className="text-4xl md:text-6xl font-serif font-bold mb-8">How It Works</h1>
@@ -98,6 +101,7 @@ const HowItWorks: React.FC = () => {
          </div>
       </section>
     </div>
+    </>
   );
 };
 

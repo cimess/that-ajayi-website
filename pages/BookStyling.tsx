@@ -47,7 +47,7 @@ const BookStyling: React.FC = () => {
       <Navigation />
       <div className="pt-32 pb-20 container mx-auto px-6">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-4xl font-serif font-bold mb-4 text-eko-gold">Book Styling Services</h1>
+          <h1 className="text-4xl font-serif font-bold mb-4 text-eko-gold">Book A Session</h1>
           <p className="text-gray-300 mb-12">
             Personalized styling for your most important moments. Tell us about your event.
           </p>

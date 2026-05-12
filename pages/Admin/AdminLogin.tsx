@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
 import { Lock } from 'lucide-react';
+import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -32,13 +34,15 @@ const AdminLogin: React.FC = () => {
   };
 
   return (
+    <>
+    <Navigation />
     <div className="min-h-screen bg-eko-black flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-eko-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 text-eko-gold">
             <Lock className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl font-serif font-bold text-white">Agency Access</h1>
+          <h1 className="text-3xl font-serif font-bold text-white">Login to Dashboard</h1>
           <p className="text-gray-400 mt-2">Enter credentials to continue</p>
         </div>
 
@@ -67,13 +71,16 @@ const AdminLogin: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-eko-gold text-eko-black font-bold py-3 rounded-lg hover:bg-white transition-colors disabled:opacity-50"
+            className="w-full bg-eko-gold text-eko-black font-bold py-3 rounded-lg hover:bg-white hover:text-black transition-colors disabled:opacity-50"
           >
-            {loading ? 'Unlocking...' : 'Unlock Dashboard'}
+            {loading ? 'logging in...' : 'Login'}
           </button>
+          <a onClick={() => navigate('/admin/reset-password')} className="text-eko-gold text-center block mt-4 underline lg:no-underline hover:underline">Forgot Password? </a>
         </form>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

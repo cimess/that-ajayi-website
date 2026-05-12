@@ -19,6 +19,7 @@ interface DataContextType {
   updateSubmissionStatus: (id: string, status: BrandSubmission['status']) => Promise<void>;
   addBooking: (booking: ClientBooking) => Promise<void>;
   updateBookingStatus: (id: string, status: ClientBooking['status']) => Promise<void>;
+  resetPassword: (email: string, newPassword: string, confirmPassword: string) => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -33,6 +34,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const [bookings, setBookings] = useState<ClientBooking[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [addCollectionItemLoading, setAddCollectionItemLoading] = useState(false);
 
   useEffect(() => {
     const fetchCollections = async () => {
@@ -89,6 +91,18 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     }
   };
 
+  const resetPassword = async (credentials: any) => {
+    try {
+      await apiClient.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, credentials);
+      setIsAuthenticated(true);
+      setIsLoadingAuth(false); // Ensure loading state is cleared
+      return true;
+    } catch (err) {
+      console.error("Reset password failed", apiClient.getErrorMessage(err));
+      return false;
+    }
+  };
+
   const fetchAdminData = useCallback(async () => {
     try {
       const [subs, books] = await Promise.all([
@@ -104,12 +118,16 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   }, []);
 
   const addCollectionItem = async (formData: FormData) => {
+    setAddCollectionItemLoading(true);
     try {
       const newItem = await apiClient.upload<any>(API_ENDPOINTS.COLLECTIONS.BASE, formData);
       setCollections(prev => [{ ...newItem, id: newItem._id }, ...prev]);
+      return newItem;
     } catch (err) {
       console.error("Error uploading collection:", apiClient.getErrorMessage(err));
       throw err;
+    }finally{
+      setAddCollectionItemLoading(false);
     }
   };
 
@@ -188,13 +206,15 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         isLoadingAuth,
         login,
         logout,
+        resetPassword,
         fetchAdminData,
         addCollectionItem,
         deleteCollectionItem,
         addSubmission,
         updateSubmissionStatus,
         addBooking,
-        updateBookingStatus
+        updateBookingStatus,
+        setAddCollectionItemLoading
       }}
     >
       {children}

@@ -30,7 +30,8 @@ app.use(morgan('dev'));
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
-   "https://that-ajayi.netlify.app"
+   "https://that-ajayi.netlify.app",
+   "http://localhost:3001"
   ],
   credentials: true
 }));
@@ -56,4 +57,5 @@ const { errorHandler, notFound } = require('./middleware/errorHandler');
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.timeout = 120000;

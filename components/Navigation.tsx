@@ -68,6 +68,9 @@ const Navigation: React.FC = () => {
           <Link to="/submit" className=" px-2 py-2 rounded-full hover:bg-amber-500 hover:text-black transition-colors duration-300 font-bold">
             SUBMIT ITEM
           </Link>
+          <Link to="/admin" className=" px-2 py-2 rounded-full hover:bg-amber-500 hover:text-black transition-colors duration-300 font-bold">
+            Login
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
@@ -87,11 +90,12 @@ const Navigation: React.FC = () => {
           <Link to="/how-it-works" onClick={() => setIsOpen(false)} className="text-white text-lg font-serif ">How It Works</Link>
           <Link to="/collections" onClick={() => setIsOpen(false)} className="text-white text-lg font-serif ">Collections</Link>
           <Link to="/submit" onClick={() => setIsOpen(false)} className="text-white text-lg font-serif ">Submit Item</Link>
+          
           <Link to="/book" onClick={() => setIsOpen(false)} className="bg-eko-gold text-eko-black py-3 w-full font-bold mt-4 text-center">
             BOOK STYLING
           </Link>
           <Link to="/admin" onClick={() => setIsOpen(false)} className="text-gray-500 text-sm flex items-center gap-2 justify-center mt-4">
-            <Lock className="w-3 h-3" /> Agency Access
+            <Lock className="w-3 h-3" /> Login
           </Link>
         </div>
       )}
